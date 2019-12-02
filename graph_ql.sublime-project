@@ -1,0 +1,50 @@
+{
+	"": "${project_path}",
+	"build_systems":
+	[
+		{
+			"file_regex": "^[ ]*File \"(...*?)\", line ([0-9]*)",
+			"name": "Anaconda Python Builder",
+			"selector": "source.python",
+			"shell_cmd": "\"python\" -u \"$file\""
+		},
+		{
+			"file_regex": "^[ ]File \"(...?)\", line ([0-9]*)",
+			"linux":
+			{
+				"shell_cmd": "export PYTHONPATH=${project_path} && source ${project_path}/venv/bin/activate && python -u ${file}"
+			},
+			"name": "venv",
+			"selector": "source.python",
+			"windows":
+			{
+				"shell_cmd": "SET PYTHONPATH=${project_path} && ${project_path}/venv/Scripts/activate.bat && python -u ${file}"
+			}
+		},
+		{
+			"file_regex": "^[ ]File \"(...?)\", line ([0-9]*)",
+			"name": "venv_django",
+			"selector": "source.python",
+			"shell_cmd": "source ${project_path}/venv/bin/activate && python ${project_path}/hackernews/manage.py runserver",
+			"working_dir": "${project_path}/job_search"
+		}
+	],
+	"folders":
+	[
+		{
+			"folder_exclude_patterns":
+			[
+				"__pycache__"
+			],
+			"path": "."
+		}
+	],
+	"follow_symlinks": true,
+	"python_interpreter": "${project_path}/venv/bin/python",
+	"virtualenv": "${project_path}/venv",
+	
+	"settings": {
+		"sublack.black_on_save": true
+	}
+
+}
